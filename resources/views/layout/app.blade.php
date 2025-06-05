@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -8,7 +9,8 @@
     @vite(['resources/sass/app.scss', 'resources/js/app.js'])
     <link rel="stylesheet" href="{{ asset('recursos/sweetalert/sweetalert2.min.css') }}">
 </head>
-<body>
+
+<body class="" style="min-height: 90vh">
     <nav class="navbar navbar-expand-lg bg-dark navbar-dark mb-4">
         <div class="container-fluid">
             <a class="navbar-brand" href="#">Dr Lorem Ipsum</a>
@@ -60,4 +62,5 @@
     <script src="{{ asset('recursos/sweetalert/sweetalert2.all.min.js') }}"></script>
     <script src="{{ asset('recursos/js/custom.js') }}"></script>
 </body>
+
 </html>

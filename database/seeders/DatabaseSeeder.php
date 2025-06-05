@@ -14,12 +14,6 @@ class DatabaseSeeder extends Seeder
     {
         $this->call([
             Rol::class,
-            EspecialidadSeeder::class,
-            EstadoAlarmaSeeder::class,
-            MedicamentoSeeder::class,
-            SignoVitalSeeder::class,
-            SintomaSeeder::class,
-            EnfermedadCronica::class,
             UserSeeder::class
         ]);
     }

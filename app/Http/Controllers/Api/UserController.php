@@ -12,9 +12,6 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Storage;
-use PhpParser\JsonDecoder;
-use Validator;
-use \stdClass;
 
 class UserController extends Controller
 {
@@ -24,7 +21,10 @@ class UserController extends Controller
     //función para ver la ruta
     public function showLoginForm()
     {
-        return view('auth.login'); // Reemplaza 'auth.login' con la ruta a tu vista de login
+        return view('auth.login');
+    }
+    public function showRegistroForm(){
+        return view('auth.registro');
     }
     public function login(Request $request){
         try {
@@ -46,11 +46,10 @@ class UserController extends Controller
     }
 
     public function logout(Request $request){
-        // dd(json_encode(auth()->user()->tokens()));
-        $request->user()->tokens()->delete();
-        return [
-            'message' => 'Sesión cerrada correctamente',
-        ];
+        $request->session()->invalidate();
+        $request->session()->regenerateToken();
+        return redirect('/login')->with('info', 'Has cerrado sesión correctamente.');
+
     }
 
     public function registro(UserRequest $request){

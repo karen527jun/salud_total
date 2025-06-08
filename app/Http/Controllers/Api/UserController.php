@@ -12,47 +12,48 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Storage;
-use PhpParser\JsonDecoder;
-use Validator;
-use \stdClass;
 
 class UserController extends Controller
 {
     /**
      * Display a listing of the resource.
      */
+    //función para ver la ruta
+    public function showLoginForm()
+    {
+        return view('auth.login');
+    }
+    public function showRegistroForm(){
+        return view('auth.registro');
+    }
     public function login(Request $request){
         try {
-            // $request->validated();
-            // dd($request);
-            $user = User::where('DUI', $request->DUI)->first();
-            if(!$user || !Hash::check($request->password, $user->password)){
-                return response()->json(['message' => 'Inicio de sesión no válido'], 401);
-            }
-            $token = $user->createToken('SaludTotal')->plainTextToken;
-            return response()->json([
-                
-                'token' => $token,
-                'user'=>$user
-                
+            $request->validate([
+                'email'=>'required|string|email',
+                'password'=> 'required|string',
             ]);
+           $credentials = $request->only('email','password');
+           if(Auth::attempt($credentials)){
+            $request->session()->regenerate();
+            return redirect()->intended('/dashboard')->with('success', 'Bienvenido');
+           }
+           return back()->withErrors([
+            'email'=>'Las credenciales proporcionadas no coinciden con nuestros registros'
+           ])->onlyInput('email');
         } catch (\Exception $e) {
-            return response()->json(
-               [ "error"=>$e->getMessage()]
-            ,500);
+
         }
     }
 
     public function logout(Request $request){
-        // dd(json_encode(auth()->user()->tokens()));
-        $request->user()->tokens()->delete();
-        return [
-            'message' => 'Sesión cerrada correctamente',
-        ];
+        $request->session()->invalidate();
+        $request->session()->regenerateToken();
+        return redirect('/login')->with('info', 'Has cerrado sesión correctamente.');
+
     }
 
     public function registro(UserRequest $request){
-        
+
         try {
             DB::beginTransaction();
             $request->validated();
@@ -75,16 +76,16 @@ class UserController extends Controller
                     'id_usuario'=>$user->id,
                     'id_especialidad'=>$request->id_especialidad
                 ]);
-                
+
             }if ($request->id_rol==2){
                 $usuario_rol = MntPaciente::create([
                     'nombre'=>$user->nombre,
                     'id_usuario'=>$user->id,
                     'diagnostico'=>$request->diagnostico,
                     'peso'=>$request->peso,
-                    'alergias'=>$request->alergias,                 
+                    'alergias'=>$request->alergias,
                 ]);
-                
+
             }
             DB::commit();
             $token = $user->createToken('SaludTotal')->plainTextToken;
@@ -120,7 +121,7 @@ class UserController extends Controller
     public function store(Request $request)
     {
         try {
-            
+
         } catch (\Throwable $th) {
             //throw $th;
         }

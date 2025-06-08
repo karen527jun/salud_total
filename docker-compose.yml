@@ -1,0 +1,20 @@
+# docker-compose.yml
+version: "3.8"
+
+services:
+    mysql:
+        image: mysql:8.0 # Puedes elegir la versión de MySQL que necesites (ej. 5.7, 8.0)
+        ports:
+            - "3306:3306" # Mapea el puerto 3306 de tu máquina al puerto 3306 del contenedor
+        environment:
+            MYSQL_ROOT_PASSWORD: # Contraseña para el usuario root de MySQL
+            MYSQL_DATABASE: control_pacientes # Nombre de la base de datos para tu proyecto Laravel
+            #MYSQL_USER: root # Nombre de usuario para tu proyecto Laravel
+            MYSQL_PASSWORD: # Contraseña para el usuario de tu proyecto Laravel
+            MYSQL_ALLOW_EMPTY_PASSWORD: "yes"
+        volumes:
+            - dbdata:/var/lib/mysql # Persiste los datos de la base de datos para que no se pierdan al reiniciar el contenedor
+        restart: always # Asegura que el contenedor se reinicie automáticamente si se detiene
+
+volumes:
+    dbdata: # Define el volumen para la persistencia de datos

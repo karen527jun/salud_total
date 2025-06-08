@@ -19,7 +19,6 @@ class UserSeeder extends Seeder
             'apellidos' => 'Admin',
             'DUI'=>'111111111' ,
             'email'=>'admin@admin.com',
-            'foto_usuario'=>'foto',
             'password' => Hash::make('12345678'),
             'id_rol'=>1,
             'fecha_nacimiento'=>'2000-12-12'

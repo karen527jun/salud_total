@@ -17,9 +17,10 @@ class MntPacienteController extends Controller
     {
         try {
             $paciente = MntPaciente::with('usuario')->get();
-            return response()->json([
-                'data' => $paciente,
-            ], 200);
+            // return response()->json([
+            //     'data' => $paciente,
+            // ], 200);
+            return view('pacientes.index', compact(var_name: 'paciente'));
         } catch (\Exception $e) {
             return response()->json([
                 'error' => $e->getMessage(),

@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -8,8 +9,9 @@
     @vite(['resources/sass/app.scss', 'resources/js/app.js'])
     <link rel="stylesheet" href="{{ asset('recursos/sweetalert/sweetalert2.min.css') }}">
 </head>
-<body>
-    <nav class="navbar navbar-expand-lg bg-dark navbar-dark mb-4">
+
+<body class="" style="min-height: 90vh">
+    <nav class="navbar navbar-expand-lg navbar-dark" style="background-color: #2eb0d8">
         <div class="container-fluid">
             <a class="navbar-brand" href="#">Dr Lorem Ipsum</a>
             <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav"
@@ -25,7 +27,7 @@
                         <a class="nav-link" href="/products">Citas</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="/marcas">Pacientes</a>
+                        <a class="nav-link" href="/pacientes">Pacientes</a>
                     </li>
                     <li class="nav-item">
                         <a class="nav-link" href="/clients/show">Doctores</a>
@@ -35,9 +37,17 @@
                     </li>
                 </ul>
             </div>
+            <div>
+                <form method="POST" action="{{ route('logout') }}">
+                    @csrf
+                    <button class="btn btn-success">
+                        Cerrar sesión
+                    </button>
+                </form>
+            </div>
         </div>
     </nav>
-    <div class="container-fluid">
+    <div class="">
 
         @yield('content')
     </div>
@@ -60,4 +70,5 @@
     <script src="{{ asset('recursos/sweetalert/sweetalert2.all.min.js') }}"></script>
     <script src="{{ asset('recursos/js/custom.js') }}"></script>
 </body>
+
 </html>
